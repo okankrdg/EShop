@@ -13,17 +13,17 @@ namespace Infrastructre.Data
         public static async Task SeedAsync(ShopContext shopContext)
         {
             shopContext.Database.Migrate();
-            if (!shopContext.Categories.Any())
+            if (!await shopContext.Categories.AnyAsync())
             {
                 shopContext.Categories.AddRange(GetCategories());
                 await shopContext.SaveChangesAsync();
             }
-            if (!shopContext.Brands.Any())
+            if (!await shopContext.Brands.AnyAsync())
             {
                 shopContext.Brands.AddRange(GetBrands());
                 await shopContext.SaveChangesAsync();
             }
-            if (!shopContext.Products.Any())
+            if (!await shopContext.Products.AnyAsync())
             {
                 shopContext.Products.AddRange(GetProducts());
                 await shopContext.SaveChangesAsync();

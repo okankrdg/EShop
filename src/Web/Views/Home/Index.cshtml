@@ -1,4 +1,5 @@
-﻿@{
+﻿@model HomeIndexViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,3 +7,13 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+<select asp-items="Model.Categories">
+</select>
+<select asp-items="Model.Brands">
+</select>
+<ul>
+    @foreach (var item in Model.Products)
+    {
+        <li>@item.ProductName</li>
+    }
+</ul>
