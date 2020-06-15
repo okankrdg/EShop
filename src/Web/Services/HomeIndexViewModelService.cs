@@ -27,7 +27,7 @@ namespace Web.Services
             var brands = await _brandRepository.ListAllAsync();
             var items = brands.
                 Select(x => new SelectListItem() 
-                { Value = x.Id.ToString(), Text = x.BrandName,Selected=true }).OrderBy(x => x.Text).ToList();
+                { Value = x.Id.ToString(), Text = x.BrandName }).OrderBy(x => x.Text).ToList();
             var allItem = new SelectListItem() { Value = null, Text = "All" };
             items.Insert(0,allItem);
             return items;
@@ -38,19 +38,21 @@ namespace Web.Services
             var categories = await _categoryRepository.ListAllAsync();
             var items = categories.
                 Select(x => new SelectListItem()
-                { Value = x.Id.ToString(), Text = x.CategoryName,Selected=true }).OrderBy(x => x.Text).ToList();
+                { Value = x.Id.ToString(), Text = x.CategoryName }).OrderBy(x => x.Text).ToList();
             var allItem = new SelectListItem() { Value = null, Text = "All" };
             items.Insert(0,allItem);
             return items;
         }
 
-        public async Task<HomeIndexViewModel> GetHomeIndexViewModel()
+        public async Task<HomeIndexViewModel> GetHomeIndexViewModel(int? brandId, int? categoryId)
         {
             var vm = new HomeIndexViewModel
             {
                 Categories = await GetCategories(),
                 Brands = await GetBrands(),
-                Products = await _productRepository.ListAllAsync()
+                Products = await _productRepository.ListAllAsync(),
+                BrandId=brandId,
+                CategoryId=categoryId
             };
             return vm;
         }

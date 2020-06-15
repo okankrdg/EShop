@@ -12,5 +12,7 @@ namespace Web.ViewModels
         public IReadOnlyList<Product> Products { get; set; }
         public List<SelectListItem> Categories { get; set; }
         public List<SelectListItem> Brands { get; set; }
+        public int? CategoryId { get; set; }
+        public int? BrandId { get; set; }
     }
 }

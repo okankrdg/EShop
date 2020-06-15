@@ -3,17 +3,44 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-<select asp-items="Model.Categories">
-</select>
-<select asp-items="Model.Brands">
-</select>
-<ul>
-    @foreach (var item in Model.Products)
+<form>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="CategoryId">Category</label>
+                <select asp-for="CategoryId" asp-items="Model.Categories" class="form-control" onchange="this.form.submit()">
+                </select>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="BrandId">Brands</label>
+                <select asp-for="BrandId" asp-items="Model.Brands" class="form-control" onchange="this.form.submit()">>
+                </select>
+            </div>
+        </div>
+    </div>
+</form>
+
+@*https://blackrockdigital.github.io/startbootstrap-shop-homepage/*@
+<div class="row">
+    @foreach (var product in Model.Products)
     {
-        <li>@item.ProductName</li>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card h-100">
+                <a href="#"><img class="card-img-top" src="~/images/products/@product.PhotoPath" alt=""></a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="#">@product.ProductName</a>
+                    </h4>
+                    <h5>@product.UnitPrice.ToString("N2") ₺</h5>
+                    <p class="card-text">@product.Description</p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                </div>
+            </div>
+        </div>
+
     }
-</ul>
+</div>
