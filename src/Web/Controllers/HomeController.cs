@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Web.Interfaces;
 using Web.Models;
+using Web.Constants;
 
 namespace Web.Controllers
 {
@@ -21,9 +22,10 @@ namespace Web.Controllers
             _homeIndexViewModelService = homeIndexViewModelService;
         }
 
-        public async Task<IActionResult> Index(int? categoryId, int? brandId)
+        public async Task<IActionResult> Index(int? pageId,int? categoryId, int? brandId)
         {
-            return View(await _homeIndexViewModelService.GetHomeIndexViewModel(brandId,categoryId));
+            return View(await _homeIndexViewModelService.GetHomeIndexViewModel(pageId ?? 1,
+                Constants.Constants.ITEMS_PER_PAGE, brandId,categoryId));
         }
 
         public IActionResult Privacy()

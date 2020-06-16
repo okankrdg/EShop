@@ -45,16 +45,37 @@ namespace Web.Services
             return items;
         }
 
-        public async Task<HomeIndexViewModel> GetHomeIndexViewModel(int? brandId, int? categoryId)
+        public async Task<HomeIndexViewModel> GetHomeIndexViewModel(int pageIndex, int itemsPerPage,int? brandId, int? categoryId)
         {
+            int totalItems = await _productRepository
+                .CountAsync(new ProductsFilterSpecifications(categoryId, brandId));
+            var products = await _productRepository.ListAllAsync(
+                new ProductsFilterPaginatedSpecifications(categoryId, brandId, (pageIndex - 1) * itemsPerPage, itemsPerPage));
+
             var vm = new HomeIndexViewModel
             {
                 Categories = await GetCategories(),
                 Brands = await GetBrands(),
-                Products = await _productRepository.
-                    ListAllAsync(new ProductsFilterSpecifications(categoryId,brandId)),
-                BrandId=brandId,
-                CategoryId=categoryId
+                BrandId = brandId,
+                CategoryId = categoryId,
+                Products = (
+                    products.Select(x=> new ProductViewModel 
+                    { 
+                        Id=x.Id,
+                        Description=x.Description,
+                        PhotoPath=string.IsNullOrEmpty(x.PhotoPath) ? "no-product-image.png" : x.PhotoPath,
+                        ProductName=x.ProductName,
+                        UnitPrice=x.UnitPrice
+                    }).ToList()
+                    ),
+                PaginationInfo= new PaginationInfoViewModel()
+                {
+                    CurrentPage = pageIndex,
+                    ItemsOnPage = products.Count,
+                    TotalItems = totalItems,
+                    TotalPages = int.Parse(Math.Ceiling(((decimal)totalItems / itemsPerPage)).ToString())
+                }
+
             };
             return vm;
         }

@@ -18,6 +18,7 @@ UI layer types
 
 == Packages ==
 Application Core
+install-package Ardalis.Specification
 
 Infrastructure
 Install-Package Microsoft.EntityFrameworkCore.Tools

@@ -26,21 +26,13 @@
 <div class="row">
     @foreach (var product in Model.Products)
     {
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="~/images/products/@product.PhotoPath" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">@product.ProductName</a>
-                    </h4>
-                    <h5>@product.UnitPrice.ToString("N2") ₺</h5>
-                    <p class="card-text">@product.Description</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-            </div>
-        </div>
+        <partial name="_ProductPartial" model="product" />
 
     }
+</div>
+<div>
+    Toplam sayfa Adedi:@Model.PaginationInfo.TotalPages<br />
+    Toplam Öğe Adedi: @Model.PaginationInfo.TotalItems<br />
+    Şu anki sayafa=@Model.PaginationInfo.CurrentPage<br />
+    Bu sayfadaki öğe adeti: @Model.PaginationInfo.ItemsOnPage<br />
 </div>

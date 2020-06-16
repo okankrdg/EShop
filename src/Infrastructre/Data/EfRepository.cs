@@ -33,5 +33,10 @@ namespace Infrastructre.Data
         {
             return await EfSpecificationEvaluator<T>.GetQuery(_dbcontext.Set<T>().AsQueryable(),specification);
         }
+
+        public async Task<int> CountAsync(ISpecification<T> specification)
+        {
+            return await(await ApplySpecification(specification)).CountAsync();
+        }
     }
 }
