@@ -32,6 +32,8 @@ Update-Database -context AppIdentityDbContext
 Add-Migration Initial -context ShopContext -OutputDir "Data/Migrations"
 Update-Database -context ShopContext
 
+Add-Migration BasketCreate -context ShopContext -OutputDir "Data/Migrations"
+Update-Database -context ShopContext
 UI layer
 
 
