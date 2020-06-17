@@ -38,5 +38,39 @@ namespace Infrastructre.Data
         {
             return await(await ApplySpecification(specification)).CountAsync();
         }
+
+        public async Task<T> GetByIdAsync(int id)
+        {
+            return await _dbcontext.FindAsync<T>(id);
+        }
+
+        public async Task<T> AddAsync(T entity)
+        {
+            await _dbcontext.AddAsync(entity);
+            await _dbcontext.SaveChangesAsync();
+            return entity;
+        }
+
+        public async Task DeleteAsync(T entity)
+        {
+             _dbcontext.Remove(entity);
+            await _dbcontext.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(T entity)
+        {
+            _dbcontext.Update(entity);
+            await _dbcontext.SaveChangesAsync();
+        }
+
+        public async Task<T> FirstAsync(ISpecification<T> specification)
+        {
+            return await(await ApplySpecification(specification)).FirstAsync();
+        }
+
+        public async Task<T> FirstOrDefaultAsync(ISpecification<T> specification)
+        {
+            return await (await ApplySpecification(specification)).FirstOrDefaultAsync();
+        }
     }
 }
