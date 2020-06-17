@@ -70,13 +70,15 @@ namespace Web.Services
                     ),
                 PaginationInfo= new PaginationInfoViewModel()
                 {
-                    CurrentPage = pageIndex,
+                    CurrentPage = pageIndex == 0 ? 0:pageIndex,
                     ItemsOnPage = products.Count,
                     TotalItems = totalItems,
                     TotalPages = int.Parse(Math.Ceiling(((decimal)totalItems / itemsPerPage)).ToString())
                 }
 
             };
+            vm.PaginationInfo.Previous = vm.PaginationInfo.CurrentPage <= 1 ? "disabled" : "";
+            vm.PaginationInfo.Next = vm.PaginationInfo.CurrentPage >=   vm.PaginationInfo.TotalPages ? "disabled" : "";
             return vm;
         }
     }

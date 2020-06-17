@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+}
 
 <form>
     <div class="row">
@@ -15,24 +16,55 @@
         <div class="col">
             <div class="form-group">
                 <label asp-for="BrandId">Brands</label>
-                <select asp-for="BrandId" asp-items="Model.Brands" class="form-control" onchange="this.form.submit()">>
+                <select asp-for="BrandId" asp-items="Model.Brands" class="form-control" onchange="this.form.submit()">
+                    >
                 </select>
             </div>
         </div>
     </div>
 </form>
 
-@*https://blackrockdigital.github.io/startbootstrap-shop-homepage/*@
-<div class="row">
-    @foreach (var product in Model.Products)
-    {
-        <partial name="_ProductPartial" model="product" />
+@if (Model.Products.Count > 0)
+{
+    @*https://blackrockdigital.github.io/startbootstrap-shop-homepage/*@
+    <div class="row">
+        @foreach (var product in Model.Products)
+        {
+            <partial name="_ProductPartial" model="product" />
+        }
+    </div>
 
-    }
-</div>
-<div>
-    Toplam sayfa Adedi:@Model.PaginationInfo.TotalPages<br />
-    Toplam Öğe Adedi: @Model.PaginationInfo.TotalItems<br />
-    Şu anki sayafa=@Model.PaginationInfo.CurrentPage<br />
-    Bu sayfadaki öğe adeti: @Model.PaginationInfo.ItemsOnPage<br />
-</div>
+    <partial name="_PaginationViewModel" model="Model.PaginationInfo" />
+}
+else
+{
+    <div class="text-center p-5">
+
+    </div>
+}
+
+
+
+
+@*<ul class="pagination justify-content-center">
+        <li class="page-item @Model.PaginationInfo.Previous">
+            <a class="page-link" asp-route-pageId="@(Model.PaginationInfo.CurrentPage-1)" tabindex="-1">Previous</a>
+        </li>
+        @for (int i = 1; i <= Model.PaginationInfo.TotalPages; i++)
+        {
+            if (Model.PaginationInfo.CurrentPage == i)
+            {
+                <li class="page-item active">
+                    <a class="page-link" href="#">@i <span class="sr-only">(current)</span></a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link" href="#">@i</a></li>
+
+            }
+        }
+        <li class="page-item @Model.PaginationInfo.Next">
+            <a class="page-link" asp-route-pageId="@(Model.PaginationInfo.CurrentPage+1)">Next</a>
+        </li>
+    </ul>*@
